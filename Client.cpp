@@ -24,10 +24,10 @@
  * 
  * Инициализирует конфигурацию значениями по умолчанию:
  * - Порт сервера: 33333
- * - Файл конфигурации: ~/.config/velient.conf
+ * - Файл конфигурации: ~/.config/vclient.conf
  * - Остальные поля остаются пустыми
  */
-ClientConfig::ClientConfig() : serverPort(33333), configFileName("~/.config/velient.conf") {}
+ClientConfig::ClientConfig() : serverPort(33333), configFileName("~/.config/vclient.conf") {}
 
 /**
  * @brief Парсит аргументы командной строки
@@ -47,7 +47,7 @@ ClientConfig::ClientConfig() : serverPort(33333), configFileName("~/.config/veli
  * 
  * Опциональные параметры (любой порядок):
  * - -p <порт> - порт сервера (по умолчанию: 33333)
- * - -c <файл_конфига> - файл с логином и паролем (по умолчанию: ~/.config/velient.conf)
+ * - -c <файл_конфига> - файл с логином и паролем (по умолчанию: ~/.config/vclient.conf)
  * - -h - показать справку
  * 
  * @note При некорректных аргументах или использовании -h выводится справка

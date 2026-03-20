@@ -29,7 +29,7 @@ struct ClientConfig {
     /**
      * @brief Конструктор по умолчанию
      * @details Инициализирует значения по умолчанию:
-     *          порт 33333, файл конфигурации ~/.config/velient.conf
+     *          порт 33333, файл конфигурации ~/.config/vclient.conf
      */
     ClientConfig();
 };

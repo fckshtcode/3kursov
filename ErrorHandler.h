@@ -26,15 +26,16 @@ public:
      * @details Выводит сообщение в стандартный поток ошибок (stderr)
      *          с префиксом "[ОШИБКА]"
      */
-    static void logError(const std::string& message);
+    static void logErrorImpl(const std::string& message, const char* funcName);
     
     /**
      * @brief Логирует ошибку и завершает программу
      * @param message Сообщение об ошибке
+     * @param funcName Имя функции, в которой произошла ошибка
      * @details Выводит сообщение об ошибке и завершает программу 
      *          с кодом EXIT_FAILURE
      */
-    static void exitWithError(const std::string& message);
+    static void exitWithErrorImpl(const std::string& message, const char* funcName);
     
     /**
      * @brief Выводит справку по использованию программы
@@ -43,5 +44,9 @@ public:
      */
     static void printHelp();
 };
+
+// Макросы для автоматического захвата имени функции
+#define logError(msg) logErrorImpl(msg, __func__)
+#define exitWithError(msg) exitWithErrorImpl(msg, __func__)
 
 #endif // ERRORHANDLER_H

@@ -4,7 +4,7 @@ LDFLAGS = -lssl -lcrypto -lpthread
 TEST_LDFLAGS = -lUnitTest++ $(LDFLAGS)
 
 CLIENT_SRCS = main.cpp Client.cpp DataProcessor.cpp ErrorHandler.cpp Authenticator.cpp ServerConnection.cpp
-TEST_SRCS = UnitTest.cpp
+TEST_SRCS = ClientUnitTest.cpp
 CLIENT_EXEC = client
 TEST_EXEC = client_tests
 

@@ -191,7 +191,7 @@ TEST(ClientConfig_DefaultConstructor) {
     
     // Проверка значений по умолчанию
     CHECK_EQUAL(33333, config.serverPort);
-    CHECK_EQUAL("~/.config/velient.conf", config.configFileName);
+    CHECK_EQUAL("~/.config/vclient.conf", config.configFileName);
     
     // Остальные поля должны быть пустыми
     CHECK(config.serverAddress.empty());
