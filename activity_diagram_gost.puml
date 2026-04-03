@@ -1,0 +1,125 @@
+@startuml
+title Диаграмма деятельности клиентского приложения
+
+skinparam BackgroundColor white
+skinparam Shadowing false
+skinparam DefaultFontName Arial
+skinparam DefaultFontSize 14
+skinparam ArrowColor black
+skinparam ActivityBorderColor black
+skinparam ActivityBackgroundColor white
+skinparam ActivityDiamondBorderColor black
+skinparam ActivityDiamondBackgroundColor white
+skinparam ActivityBarColor black
+skinparam ActivityStartColor black
+skinparam ActivityEndColor black
+skinparam NoteBorderColor black
+skinparam NoteBackgroundColor white
+
+start
+
+if (Аргументы командной строки\nне переданы?) then (да)
+  :Вывести справку\nпо использованию программы;
+  stop
+else (нет)
+endif
+
+:Создать объект Client;
+:Запустить основной метод\nClient.run(argc, argv);
+
+:Разобрать аргументы\nкомандной строки;
+if (Аргументы корректны?) then (да)
+else (нет)
+  :Вывести сообщение\nоб ошибке и справку;
+  stop
+endif
+
+:Прочитать файл конфигурации;
+note right
+  Из конфигурационного файла
+  считываются:
+  - логин;
+  - пароль.
+end note
+
+if (Конфигурация прочитана?) then (да)
+else (нет)
+  :Вывести сообщение\nоб ошибке чтения конфигурации;
+  stop
+endif
+
+:Считать векторы\nиз бинарного файла;
+if (Входной файл\nобработан успешно?) then (да)
+else (нет)
+  :Вывести сообщение\nоб ошибке чтения данных;
+  stop
+endif
+
+:Проверить корректность\nсчитанных данных;
+if (Данные валидны?) then (да)
+else (нет)
+  :Вывести сообщение\nоб ошибке валидации;
+  stop
+endif
+
+:Установить TCP-соединение\nс сервером;
+if (Соединение установлено?) then (да)
+else (нет)
+  :Вывести сообщение\nоб ошибке подключения;
+  stop
+endif
+
+:Отправить серверу логин;
+:Получить от сервера\nсоль SALT16 или ERR;
+
+if (Получен ERR\nили неверная соль?) then (да)
+  :Вывести сообщение\nоб ошибке аутентификации;
+  :Закрыть соединение;
+  stop
+else (нет)
+endif
+
+:Вычислить HASH = MD5(SALT + PASSWORD);
+:Отправить HASH серверу;
+:Получить ответ аутентификации;
+
+if (Ответ сервера = OK?) then (да)
+else (нет)
+  :Вывести сообщение\nоб ошибке аутентификации;
+  :Закрыть соединение;
+  stop
+endif
+
+:Отправить количество векторов;
+
+while (Остались\nнеотправленные векторы?) is (да)
+  :Выбрать очередной вектор;
+  :Отправить размер вектора;
+
+  if (Размер вектора > 0?) then (да)
+    :Отправить элементы вектора;
+  else (нет)
+  endif
+
+  :Получить результат\nобработки вектора;
+  if (Результат получен?) then (да)
+    :Сохранить результат\nво внутренний список;
+  else (нет)
+    :Вывести сообщение\nоб ошибке обмена данными;
+    :Закрыть соединение;
+    stop
+  endif
+endwhile (нет)
+
+:Сохранить результаты\nв выходной файл;
+if (Сохранение выполнено?) then (да)
+  :Закрыть соединение;
+  :Завершить работу программы\nс кодом успеха;
+  stop
+else (нет)
+  :Вывести сообщение\nоб ошибке сохранения;
+  :Закрыть соединение;
+  stop
+endif
+
+@enduml
